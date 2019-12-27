@@ -1,6 +1,7 @@
 ﻿using Abp.Dependency;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
+using Abp.RemoteEventBus.Managers;
 
 namespace Abp.RemoteEventBus
 {

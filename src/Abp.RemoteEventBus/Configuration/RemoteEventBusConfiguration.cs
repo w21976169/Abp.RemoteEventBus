@@ -5,6 +5,8 @@ using System.Text;
 using Abp.Configuration.Startup;
 using Abp.Dependency;
 using Abp.Reflection;
+using Abp.RemoteEventBus.Configuration;
+using Abp.RemoteEventBus.Managers;
 using Castle.MicroKernel.Registration;
 using Castle.Core.Logging;
 
@@ -39,12 +41,18 @@ namespace Abp.RemoteEventBus.RabbitMQ
 
             foreach (var type in types)
             {
-                var iType = type.GetInterfaces().FirstOrDefault(e => e.Name.Contains("IRemoteEventHandler"));
-                if (iType != null)
+                var iTypes = type.GetInterfaces().Where(e => e.Name.Contains("IRemoteEventHandler")).ToList();
+
+                foreach (var iType in iTypes)
                 {
-                    var gType = iType.GetGenericArguments().FirstOrDefault();
-                    if (gType != null) topics.Add(gType.Name);
+                    if (iType != null)
+                    {
+                        var gType = iType.GetGenericArguments().FirstOrDefault();
+                        if (gType != null) topics.Add(gType.Name);
+                    }
+
                 }
+
             }
 
             Logger.Info($"auto subscribe topics {string.Join(",", topics)}");

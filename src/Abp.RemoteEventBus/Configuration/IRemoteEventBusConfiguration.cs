@@ -1,6 +1,6 @@
 ﻿using Abp.Configuration.Startup;
 
-namespace Abp.RemoteEventBus
+namespace Abp.RemoteEventBus.Configuration
 {
     public interface IRemoteEventBusConfiguration
     {

@@ -1,5 +1,7 @@
 ﻿using System;
 using Abp.Dependency;
+using Abp.RemoteEventBus.Configuration;
+using Abp.RemoteEventBus.Managers;
 using Castle.MicroKernel.Registration;
 
 namespace Abp.RemoteEventBus.RabbitMQ
@@ -20,7 +22,7 @@ namespace Abp.RemoteEventBus.RabbitMQ
             );
             iocManager.IocContainer.Register(
                 Component.For<IRemoteEventBus>()
-                    .ImplementedBy<RemoteEventBus>()
+                    .ImplementedBy<Managers.RemoteEventBus>()
                     .Named(Guid.NewGuid().ToString())
                     .LifestyleSingleton()
                     .IsDefault()

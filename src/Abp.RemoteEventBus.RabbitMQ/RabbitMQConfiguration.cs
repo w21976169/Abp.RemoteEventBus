@@ -1,6 +1,7 @@
 ﻿using System;
 using Abp.Configuration.Startup;
 using Abp.Dependency;
+using Abp.RemoteEventBus.Managers;
 using Castle.MicroKernel.Registration;
 
 namespace Abp.RemoteEventBus.RabbitMQ

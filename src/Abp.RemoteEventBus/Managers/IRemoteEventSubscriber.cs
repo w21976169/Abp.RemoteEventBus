@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Abp.RemoteEventBus
+namespace Abp.RemoteEventBus.Managers
 {
     public interface IRemoteEventSubscriber : IDisposable
     {

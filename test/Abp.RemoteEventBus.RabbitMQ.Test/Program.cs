@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Abp.Castle.Logging.Log4Net;
-using Abp.RemoteEventBus.Impl;
+using Abp.RemoteEventBus.Managers;
 using Castle.Facilities.Logging;
 
 namespace Abp.RemoteEventBus.RabbitMQ.Test

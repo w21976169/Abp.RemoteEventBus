@@ -2,6 +2,9 @@
 using RabbitMQ.Client;
 using System.Text;
 using System.Threading.Tasks;
+using Abp.RemoteEventBus.EventDatas;
+using Abp.RemoteEventBus.Managers;
+using Newtonsoft.Json;
 
 namespace Abp.RemoteEventBus.RabbitMQ
 {
@@ -10,20 +13,17 @@ namespace Abp.RemoteEventBus.RabbitMQ
         private readonly IRabbitMqEventBusOptions _rabbitMqEventBusOptions;
 
         private readonly IObjectPool<IConnection> _connectionPool;
-        
-        private readonly IRemoteEventSerializer _remoteEventSerializer;
+
 
         private bool _disposed;
 
         public RabbitMQRemoteEventPublisher(
             IPoolManager poolManager, 
-            IRabbitMqEventBusOptions rabbitMqEventBusOptions,
-            IRemoteEventSerializer remoteEventSerializer
-            )
+            IRabbitMqEventBusOptions rabbitMqEventBusOptions
+        )
         {
             _rabbitMqEventBusOptions = rabbitMqEventBusOptions;
-            _remoteEventSerializer = remoteEventSerializer;
-            
+
             _connectionPool = poolManager.NewPool<IConnection>()
                 .WithFactory(new PooledObjectFactory(rabbitMqEventBusOptions))
                                     .Instance();
@@ -38,7 +38,7 @@ namespace Abp.RemoteEventBus.RabbitMQ
             {
                 var channel = connection.CreateModel();
                 channel.ExchangeDeclare(_rabbitMqEventBusOptions.ExchangeName, "direct", true);
-                var body = Encoding.UTF8.GetBytes(_remoteEventSerializer.Serialize(remoteEventData));
+                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(remoteEventData));
                 var properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
                 channel.BasicPublish(_rabbitMqEventBusOptions.ExchangeName, routingKey, properties, body);

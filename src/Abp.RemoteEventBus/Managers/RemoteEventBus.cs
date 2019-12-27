@@ -1,27 +1,21 @@
-﻿using Castle.Core.Logging;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Abp.Dependency;
 using Abp.Events.Bus;
 using Abp.Reflection;
-using Abp.RemoteEventBus.Handlers;
-using Abp.RemoteEventBus.Impl;
+using Abp.RemoteEventBus.EventDatas;
+using Castle.Core.Logging;
 using Newtonsoft.Json;
 
-namespace Abp.RemoteEventBus
+namespace Abp.RemoteEventBus.Managers
 {
     public class RemoteEventBus : IRemoteEventBus
     {
         public ILogger Logger { get; set; }
 
-        private readonly IEventBus _eventBus;
         private readonly IRemoteEventPublisher _publisher;
         private readonly IRemoteEventSubscriber _subscriber;
-        private readonly IRemoteEventTopicSelector _topicSelector;
-        private readonly IRemoteEventSerializer _remoteEventSerializer;
         private readonly IIocResolver _iocResolver;
         private readonly TypeFinder _typeFinder;
 
@@ -31,14 +25,11 @@ namespace Abp.RemoteEventBus
             IEventBus eventBus,
             IRemoteEventPublisher publisher,
             IRemoteEventSubscriber subscriber,
-            IRemoteEventTopicSelector topicSelector,
-            IRemoteEventSerializer remoteEventSerializer, IIocResolver iocResolver, TypeFinder typeFinder)
+            IIocResolver iocResolver, 
+            TypeFinder typeFinder)
         {
-            _eventBus = eventBus;
             _publisher = publisher;
             _subscriber = subscriber;
-            _topicSelector = topicSelector;
-            _remoteEventSerializer = remoteEventSerializer;
             _iocResolver = iocResolver;
             _typeFinder = typeFinder;
 
