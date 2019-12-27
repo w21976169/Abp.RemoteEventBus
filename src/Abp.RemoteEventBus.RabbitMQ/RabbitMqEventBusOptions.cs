@@ -10,5 +10,10 @@ namespace Abp.RemoteEventBus.RabbitMQ
         public string Url { get; set; }
         public string ClientName { get; set; }
         public string ExchangeName { get; set; }
+
+        public RabbitMqEventBusOptions()
+        {
+            ExchangeName = "RemoteEventBusMessages";
+        }
     }
 }
