@@ -1,9 +1,9 @@
 ﻿using Abp.Dependency;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
-using Abp.RemoteEventBus.Managers;
+using Camc.Abp.RemoteEventBus.Managers;
 
-namespace Abp.RemoteEventBus
+namespace Camc.Abp.RemoteEventBus
 {
     public class AbpRemoteEventBusModule : AbpModule
     {

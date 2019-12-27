@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Abp.Dependency;
+﻿using Abp.Dependency;
 
-namespace Abp.RemoteEventBus.RabbitMQ
+namespace Camc.Abp.RemoteEventBus.RabbitMQ
 {
     public class RabbitMqEventBusOptions : IRabbitMqEventBusOptions, ITransientDependency
     {

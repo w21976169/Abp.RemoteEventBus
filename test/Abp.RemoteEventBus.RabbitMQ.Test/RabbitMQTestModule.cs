@@ -1,8 +1,8 @@
 ﻿using Abp.Modules;
 using Abp.Reflection.Extensions;
-using Abp.RemoteEventBus.Configuration;
+using Camc.Abp.RemoteEventBus.Configuration;
 
-namespace Abp.RemoteEventBus.RabbitMQ.Test
+namespace Camc.Abp.RemoteEventBus.RabbitMQ.Test
 {
     [DependsOn(typeof(AbpRemoteEventBusRabbitMQModule))]
     public class RabbitMQTestModule : AbpModule

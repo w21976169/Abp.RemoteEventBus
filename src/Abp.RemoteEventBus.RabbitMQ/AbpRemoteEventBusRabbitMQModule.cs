@@ -2,7 +2,7 @@
 using Abp.Reflection.Extensions;
 using Commons.Pool;
 
-namespace Abp.RemoteEventBus.RabbitMQ
+namespace Camc.Abp.RemoteEventBus.RabbitMQ
 {
     [DependsOn(typeof(AbpRemoteEventBusModule))]
     public class AbpRemoteEventBusRabbitMQModule: AbpModule

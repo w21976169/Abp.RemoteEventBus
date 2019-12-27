@@ -1,11 +1,9 @@
-﻿using Abp.Dependency;
+﻿using System;
+using Abp;
 using Commons.Pool;
 using RabbitMQ.Client;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Abp.RemoteEventBus.RabbitMQ
+namespace Camc.Abp.RemoteEventBus.RabbitMQ
 {
     public class PooledObjectFactory : IPooledObjectFactory<IConnection>
     {

@@ -1,4 +1,4 @@
-﻿namespace Abp.RemoteEventBus.Handlers
+﻿namespace Camc.Abp.RemoteEventBus.Handlers
 {
     public interface IRemoteEventHandler<in TRemoteEventData>
     {

@@ -1,14 +1,15 @@
-﻿using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System;
-using System.Linq;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Abp.RemoteEventBus.Managers;
+using Abp;
+using Camc.Abp.RemoteEventBus.Managers;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
-namespace Abp.RemoteEventBus.RabbitMQ
+namespace Camc.Abp.RemoteEventBus.RabbitMQ
 {
     public class RabbitMQRemoteEventSubscriber : IRemoteEventSubscriber
     {

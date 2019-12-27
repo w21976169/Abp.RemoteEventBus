@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Abp.RemoteEventBus.EventDatas;
+using Camc.Abp.RemoteEventBus.EventDatas;
 
-namespace Abp.RemoteEventBus.Managers
+namespace Camc.Abp.RemoteEventBus.Managers
 {
     public interface IRemoteEventPublisher: IDisposable
     {

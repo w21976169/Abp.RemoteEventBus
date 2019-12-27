@@ -1,10 +1,10 @@
 ﻿using System;
 using Abp.Dependency;
-using Abp.RemoteEventBus.Configuration;
-using Abp.RemoteEventBus.Managers;
+using Camc.Abp.RemoteEventBus.Configuration;
+using Camc.Abp.RemoteEventBus.Managers;
 using Castle.MicroKernel.Registration;
 
-namespace Abp.RemoteEventBus.RabbitMQ
+namespace Camc.Abp.RemoteEventBus.RabbitMQ
 {
     public static class ConfigurationExtensions
     {
@@ -22,7 +22,7 @@ namespace Abp.RemoteEventBus.RabbitMQ
             );
             iocManager.IocContainer.Register(
                 Component.For<IRemoteEventBus>()
-                    .ImplementedBy<Managers.RemoteEventBus>()
+                    .ImplementedBy<Camc.Abp.RemoteEventBus.Managers.RemoteEventBus>()
                     .Named(Guid.NewGuid().ToString())
                     .LifestyleSingleton()
                     .IsDefault()

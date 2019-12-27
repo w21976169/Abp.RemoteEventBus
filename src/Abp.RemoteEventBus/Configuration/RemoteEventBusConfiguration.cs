@@ -1,16 +1,12 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 using Abp.Configuration.Startup;
 using Abp.Dependency;
 using Abp.Reflection;
-using Abp.RemoteEventBus.Configuration;
-using Abp.RemoteEventBus.Managers;
-using Castle.MicroKernel.Registration;
+using Camc.Abp.RemoteEventBus.Managers;
 using Castle.Core.Logging;
 
-namespace Abp.RemoteEventBus.RabbitMQ
+namespace Camc.Abp.RemoteEventBus.Configuration
 {
     public class RemoteEventBusConfiguration : IRemoteEventBusConfiguration, ISingletonDependency
     {
