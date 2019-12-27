@@ -4,7 +4,7 @@ using Camc.Abp.RemoteEventBus.Configuration;
 
 namespace Camc.Abp.RemoteEventBus.RabbitMQ.Test
 {
-    [DependsOn(typeof(AbpRemoteEventBusRabbitMQModule))]
+    [DependsOn(typeof(CamcAbpRemoteEventBusRabbitMQModule))]
     public class RabbitMQTestModule : AbpModule
     {
         public override void Initialize()

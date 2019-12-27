@@ -4,13 +4,13 @@ using Commons.Pool;
 
 namespace Camc.Abp.RemoteEventBus.RabbitMQ
 {
-    [DependsOn(typeof(AbpRemoteEventBusModule))]
-    public class AbpRemoteEventBusRabbitMQModule: AbpModule
+    [DependsOn(typeof(CamcAbpRemoteEventBusModule))]
+    public class CamcAbpRemoteEventBusRabbitMQModule: AbpModule
     {
         public override void Initialize()
         {
             IocManager.Register<IPoolManager, PoolManager>();
-            IocManager.RegisterAssemblyByConvention(typeof(AbpRemoteEventBusRabbitMQModule).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(CamcAbpRemoteEventBusRabbitMQModule).GetAssembly());
         }
     }
 }

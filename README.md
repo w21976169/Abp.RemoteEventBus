@@ -7,9 +7,47 @@ A distributed event bus, inspired by the [Abp](https://github.com/FJQBT/ABP) eve
 
 ## How to use?
 
+### 
+
+### RemoteEventData
+
+```c#
+[Serializable]
+public class TestRemoteEventData: RemoteEventData
+{
+	public string Name { get; set; }
+}
+
+[Serializable]
+public class Test1RemoteEventData: RemoteEventData
+{
+	public string Name { get; set; }
+}
+```
+
+### RemoteEventHandler
+
+```c#
+public class TestRemoteEventHandler : IRemoteEventHandler<TestRemoteEventData>,
+	IRemoteEventHandler<Test1RemoteEventData>, ITransientDependency
+{
+	public void HandleEvent(TestRemoteEventData eventData)
+    {
+    }
+
+    public void HandleEvent(Test1RemoteEventData eventData)
+    {
+    }
+}
+```
+
+### 
+
+
+
 ### Publish
 
-```
+```c#
     var eventDate = new RemoteEventData("Type_Test")
         {
             Data ={["playload"]=DateTime.Now}
@@ -20,7 +58,7 @@ A distributed event bus, inspired by the [Abp](https://github.com/FJQBT/ABP) eve
 
 ### Subscribe
 
-```
+```C#
     [RemoteEventHandler(ForType = "Type_Test", ForTopic = "Topic_Test")]
     public class RemoteEventHandler : IRemoteEventHandler, ITransientDependency
     {
@@ -31,79 +69,29 @@ A distributed event bus, inspired by the [Abp](https://github.com/FJQBT/ABP) eve
     }
 ```
 ### Configuration
-#### Use kafka
-```
-    [DependsOn(typeof(AbpRemoteEventBusKafkaModule))]
-    public class DemoModule : AbpModule
+```c#
+[DependsOn(typeof(CamcAbpRemoteEventBusRabbitMQModule))]
+public class RabbitMQTestModule : AbpModule
+{
+	public override void Initialize()
     {
-        public override void Initialize()
-        {
-            IocManager.RegisterAssemblyByConvention(typeof(DemoModule).GetAssembly());
-        }
-
-        public override void PostInitialize()
-        {
-            // use kafka
-            Configuration.Modules.RemoteEventBus().UseKafka().Configure((setting) =>
-            {
-                setting.Properties.Add("bootstrap.servers", "192.168.188.142:9092");
-                setting.Properties.Add("group.id", "App-Test");
-            });
-            
-            // enable auto subscribe
-            // will scan class which use RemoteEventHandlerAttribute and auto subscribe topic base the attribute info
-            Configuration.Modules.RemoteEventBus().AutoSubscribe();
-        }
+       IocManager.RegisterAssemblyByConvention(typeof(RabbitMQTestModule).GetAssembly());
     }
-```
-#### Use RabbitMQ
-```
-    [DependsOn(typeof(AbpRemoteEventBusRabbitMQModule))]
-    public class DemoModule : AbpModule
+    
+    public override void PostInitialize()
     {
-        public override void Initialize()
+        Configuration.Modules.RemoteEventBus().UseRabbitMQ().Configure(setting =>
         {
-            IocManager.RegisterAssemblyByConvention(typeof(DemoModule).GetAssembly());
-        }
+            setting.Url = "amqp://guest:guest@127.0.0.1:5672/";
+            setting.ClientName = "ZTTest";
+        });
 
-        public override void PostInitialize()
-        {
-            // use rabbitmq
-            Configuration.Modules.RemoteEventBus().UseRabbitMQ().Configure(setting =>
-            {
-                //setting.Url = "amqp://guest:guest@127.0.0.1:5672/";
-            });
-            
-            // enable auto subscribe
-            // will scan class which use RemoteEventHandlerAttribute and auto subscribe topic base the attribute info
-            Configuration.Modules.RemoteEventBus().AutoSubscribe();
-        }
+        Configuration.Modules.RemoteEventBus().AutoSubscribe();
     }
+}
 ```
-#### Use Redis
-```
-    [DependsOn(typeof(AbpRemoteEventBusRedisModule))]
-    public class DemoModule : AbpModule
-    {
-        public override void Initialize()
-        {
-            IocManager.RegisterAssemblyByConvention(typeof(DemoModule).GetAssembly());
-        }
 
-        public override void PostInitialize()
-        {   
-            // use redis
-            Configuration.Modules.RemoteEventBus().UseRedis().Configure((setting) =>
-            {
-                setting.Server = "127.0.0.1:6379";
-            });
-            
-            // enable auto subscribe
-            // will scan class which use RemoteEventHandlerAttribute and auto subscribe topic base the attribute info
-            Configuration.Modules.RemoteEventBus().AutoSubscribe();
-        }
-    }
-```
+
 ### Demo
 See [Abp.RemoteEventBus.RabbitMQ.Test](test/Abp.RemoteEventBus.RabbitMQ.Test)
 
