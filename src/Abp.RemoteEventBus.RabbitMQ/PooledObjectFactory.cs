@@ -11,12 +11,12 @@ namespace Abp.RemoteEventBus.RabbitMQ
     {
         private ConnectionFactory _connectionFactory;
 
-        public PooledObjectFactory(IRabbitMQSetting rabbitMQSetting)
+        public PooledObjectFactory(IRabbitMqEventBusOptions rabbitMqEventBusOptions)
         {
-            Check.NotNullOrWhiteSpace(rabbitMQSetting.Url, "Url");
+            Check.NotNullOrWhiteSpace(rabbitMqEventBusOptions.Url, "Url");
             _connectionFactory = new ConnectionFactory
             {
-                Uri = new Uri(rabbitMQSetting.Url),
+                Uri = new Uri(rabbitMqEventBusOptions.Url),
                 AutomaticRecoveryEnabled = true
             };
         }

@@ -6,8 +6,8 @@ namespace Abp.RemoteEventBus.RabbitMQ
 {
     public interface IRabbitMQConfiguration
     {
-        IRabbitMQConfiguration Configure(Action<IRabbitMQSetting> configureAction);
+        IRabbitMQConfiguration Configure(Action<IRabbitMqEventBusOptions> configureAction);
 
-        IRabbitMQConfiguration Configure(IRabbitMQSetting setting);
+        IRabbitMQConfiguration Configure(IRabbitMqEventBusOptions eventBusOptions);
     }
 }

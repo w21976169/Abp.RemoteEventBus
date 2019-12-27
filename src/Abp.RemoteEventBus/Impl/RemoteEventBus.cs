@@ -1,10 +1,15 @@
-﻿using Abp.RemoteEventBus.Exceptions;
-using Castle.Core.Logging;
+﻿using Castle.Core.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Abp.Dependency;
 using Abp.Events.Bus;
-using Abp.RemoteEventBus.Events;
+using Abp.Reflection;
+using Abp.RemoteEventBus.Handlers;
+using Abp.RemoteEventBus.Impl;
+using Newtonsoft.Json;
 
 namespace Abp.RemoteEventBus
 {
@@ -17,6 +22,8 @@ namespace Abp.RemoteEventBus
         private readonly IRemoteEventSubscriber _subscriber;
         private readonly IRemoteEventTopicSelector _topicSelector;
         private readonly IRemoteEventSerializer _remoteEventSerializer;
+        private readonly IIocResolver _iocResolver;
+        private readonly TypeFinder _typeFinder;
 
         private bool _disposed;
 
@@ -25,42 +32,28 @@ namespace Abp.RemoteEventBus
             IRemoteEventPublisher publisher,
             IRemoteEventSubscriber subscriber,
             IRemoteEventTopicSelector topicSelector,
-            IRemoteEventSerializer remoteEventSerializer
-        )
+            IRemoteEventSerializer remoteEventSerializer, IIocResolver iocResolver, TypeFinder typeFinder)
         {
             _eventBus = eventBus;
             _publisher = publisher;
             _subscriber = subscriber;
             _topicSelector = topicSelector;
             _remoteEventSerializer = remoteEventSerializer;
+            _iocResolver = iocResolver;
+            _typeFinder = typeFinder;
 
             Logger = NullLogger.Instance;
         }
 
+
         public void Publish(IRemoteEventData eventData)
         {
-            Publish(_topicSelector.SelectTopic(eventData), eventData);
+            _publisher.Publish(eventData);
         }
 
-        public Task PublishAsync(IRemoteEventData eventData)
+        public async Task PublishAsync(IRemoteEventData eventData)
         {
-            return PublishAsync(_topicSelector.SelectTopic(eventData), eventData);
-        }
-
-        public void Publish(string topic, IRemoteEventData eventData)
-        {
-            _eventBus.Trigger(this, new RemoteEventBusPublishingEvent(eventData));
-            _publisher.Publish(topic, eventData);
-            Logger.Debug($"Event published on topic {topic}");
-            _eventBus.Trigger(this, new RemoteEventBusPublishedEvent(eventData));
-        }
-
-        public async Task PublishAsync(string topic, IRemoteEventData eventData)
-        {
-            await _eventBus.TriggerAsync(this, new RemoteEventBusPublishingEvent(eventData));
-            await _publisher.PublishAsync(topic, eventData)
-                .ContinueWith((s) => Logger.Debug($"Event published on topic {topic}"));
-            await _eventBus.TriggerAsync(this, new RemoteEventBusPublishedEvent(eventData));
+            await _publisher.PublishAsync(eventData);
             await Task.FromResult(0);
         }
 
@@ -110,20 +103,22 @@ namespace Abp.RemoteEventBus
 
         public virtual void MessageHandle(string topic, string message)
         {
-            Logger.Debug($"Receive message on topic {topic}");
-            try
-            {
-                var eventData = _remoteEventSerializer.Deserialize<RemoteEventData>(message);
-                var eventArgs = new RemoteEventArgs(eventData, topic, message);
-                _eventBus.Trigger(this, new RemoteEventBusHandlingEvent(eventArgs));
-                _eventBus.Trigger(this, eventArgs);
-                _eventBus.Trigger(this, new RemoteEventBusHandledEvent(eventArgs));
-            }
-            catch (Exception ex)
-            {
-                Logger.Error("Consume remote message exception", ex);
-                _eventBus.Trigger(this, new RemoteEventMessageHandleExceptionData(ex, topic, topic));
-            }
+            // TODO: 触发对应的 Handler
+            var dataType = _typeFinder.Find(type => type.Name == topic).FirstOrDefault();
+
+            var eventData = JsonConvert.DeserializeObject(message, dataType);
+
+            var handleType = _typeFinder.Find(type => type.GetInterfaces().Any(e =>
+                    e.Name.Contains("IRemoteEventHandler") && e.GetGenericArguments().Any(e1 => e1.Name == topic)))
+                .FirstOrDefault();
+
+            var handler = _iocResolver.Resolve(handleType);
+
+            var handlerMethod = handleType.GetMethods().FirstOrDefault(e =>
+                e.Name == "HandleEvent" && e.GetParameters().Length == 1 &&
+                e.GetParameters().First().ParameterType.Name == topic);
+
+            handlerMethod.Invoke(handler, new object[] {eventData});
         }
 
         public void UnsubscribeAll()

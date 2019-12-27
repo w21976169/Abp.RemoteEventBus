@@ -7,7 +7,7 @@ namespace Abp.RemoteEventBus.RabbitMQ
 {
     public class RabbitMQRemoteEventPublisher : IRemoteEventPublisher
     {
-        private const string _exchangeTopic = "RemoteEventBus.Exchange.Topic";
+        private readonly IRabbitMqEventBusOptions _rabbitMqEventBusOptions;
 
         private readonly IObjectPool<IConnection> _connectionPool;
         
@@ -17,30 +17,31 @@ namespace Abp.RemoteEventBus.RabbitMQ
 
         public RabbitMQRemoteEventPublisher(
             IPoolManager poolManager, 
-            IRabbitMQSetting rabbitMQSetting,
+            IRabbitMqEventBusOptions rabbitMqEventBusOptions,
             IRemoteEventSerializer remoteEventSerializer
             )
         {
+            _rabbitMqEventBusOptions = rabbitMqEventBusOptions;
             _remoteEventSerializer = remoteEventSerializer;
             
             _connectionPool = poolManager.NewPool<IConnection>()
-                                    .InitialSize(rabbitMQSetting.InitialSize)
-                                    .MaxSize(rabbitMQSetting.MaxSize)
-                                    .WithFactory(new PooledObjectFactory(rabbitMQSetting))
+                .WithFactory(new PooledObjectFactory(rabbitMqEventBusOptions))
                                     .Instance();
         }
 
-        public void Publish(string topic, IRemoteEventData remoteEventData)
+        public void Publish(IRemoteEventData remoteEventData)
         {
+            var routingKey = remoteEventData.GetType().Name;
+
             var connection = _connectionPool.Acquire();
             try
             {
                 var channel = connection.CreateModel();
-                channel.ExchangeDeclare(_exchangeTopic, "topic",true);
+                channel.ExchangeDeclare(_rabbitMqEventBusOptions.ExchangeName, "direct", true);
                 var body = Encoding.UTF8.GetBytes(_remoteEventSerializer.Serialize(remoteEventData));
                 var properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
-                channel.BasicPublish(_exchangeTopic, topic, properties, body);
+                channel.BasicPublish(_rabbitMqEventBusOptions.ExchangeName, routingKey, properties, body);
             }
             finally
             {
@@ -48,11 +49,11 @@ namespace Abp.RemoteEventBus.RabbitMQ
             }
         }
 
-        public Task PublishAsync(string topic, IRemoteEventData remoteEventData)
+        public Task PublishAsync(IRemoteEventData remoteEventData)
         {
             return Task.Factory.StartNew(() =>
             {
-                Publish(topic, remoteEventData);
+                Publish(remoteEventData);
             });
         }
 

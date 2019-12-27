@@ -12,8 +12,8 @@
     <ProjectReference Include="..\Abp.RemoteEventBus\Abp.RemoteEventBus.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Commons" Version="0.2.4.731" />
-    <PackageReference Include="Commons.Pool" Version="0.2.4.731" />
-    <PackageReference Include="RabbitMQ.Client" Version="5.0.1" />
+    <PackageReference Include="Commons" Version="0.4.0.1347" />
+    <PackageReference Include="Commons.Pool" Version="0.4.0.1347" />
+    <PackageReference Include="RabbitMQ.Client" Version="5.1.2" />
   </ItemGroup>
 </Project>

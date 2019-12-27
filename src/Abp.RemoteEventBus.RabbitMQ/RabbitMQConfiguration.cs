@@ -14,11 +14,11 @@ namespace Abp.RemoteEventBus.RabbitMQ
             _configuration = configuration;
         }
 
-        public IRabbitMQConfiguration Configure(Action<IRabbitMQSetting> configureAction)
+        public IRabbitMQConfiguration Configure(Action<IRabbitMqEventBusOptions> configureAction)
         {
-            _configuration.IocManager.RegisterIfNot<IRabbitMQSetting, RabbitMQSetting>();
+            _configuration.IocManager.RegisterIfNot<IRabbitMqEventBusOptions, RabbitMqEventBusOptions>();
 
-            var setting = _configuration.IocManager.Resolve<IRabbitMQSetting>();
+            var setting = _configuration.IocManager.Resolve<IRabbitMqEventBusOptions>();
             configureAction(setting);
 
             Configure(setting);
@@ -27,12 +27,12 @@ namespace Abp.RemoteEventBus.RabbitMQ
         }
 
 
-        public IRabbitMQConfiguration Configure(IRabbitMQSetting setting)
+        public IRabbitMQConfiguration Configure(IRabbitMqEventBusOptions eventBusOptions)
         {
             _configuration.IocManager.IocContainer.Register(
                  Component.For<IRemoteEventPublisher>()
                     .ImplementedBy<RabbitMQRemoteEventPublisher>()
-                    .DependsOn(Castle.MicroKernel.Registration.Dependency.OnValue<IRabbitMQSetting>(setting))
+                    .DependsOn(Castle.MicroKernel.Registration.Dependency.OnValue<IRabbitMqEventBusOptions>(eventBusOptions))
                     .Named(Guid.NewGuid().ToString())
                     .LifestyleSingleton()
                     .IsDefault()
@@ -41,7 +41,7 @@ namespace Abp.RemoteEventBus.RabbitMQ
             _configuration.IocManager.IocContainer.Register(
                  Component.For<IRemoteEventSubscriber>()
                     .ImplementedBy<RabbitMQRemoteEventSubscriber>()
-                    .DependsOn(Castle.MicroKernel.Registration.Dependency.OnValue<IRabbitMQSetting>(setting))
+                    .DependsOn(Castle.MicroKernel.Registration.Dependency.OnValue<IRabbitMqEventBusOptions>(eventBusOptions))
                     .Named(Guid.NewGuid().ToString())
                     .LifestyleSingleton()
                     .IsDefault()

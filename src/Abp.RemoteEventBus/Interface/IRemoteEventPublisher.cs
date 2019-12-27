@@ -7,8 +7,8 @@ namespace Abp.RemoteEventBus
 {
     public interface IRemoteEventPublisher: IDisposable
     {
-        void Publish(string topic, IRemoteEventData remoteEventData);
+        void Publish(IRemoteEventData remoteEventData);
 
-        Task PublishAsync(string topic, IRemoteEventData remoteEventData);
+        Task PublishAsync(IRemoteEventData remoteEventData);
     }
 }

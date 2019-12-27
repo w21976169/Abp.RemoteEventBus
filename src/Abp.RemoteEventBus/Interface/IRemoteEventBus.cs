@@ -10,11 +10,7 @@ namespace Abp.RemoteEventBus
 
         void Publish(IRemoteEventData eventData);
 
-        void Publish(string topic, IRemoteEventData eventData);
-
         Task PublishAsync(IRemoteEventData eventData);
-
-        Task PublishAsync(string topic, IRemoteEventData eventData);
 
         void Subscribe(string topic);
 

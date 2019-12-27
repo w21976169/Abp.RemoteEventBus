@@ -9,6 +9,6 @@
     <Version>1.0.1</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Abp" Version="3.4.0" />
+    <PackageReference Include="Abp" Version="4.4.0" />
   </ItemGroup>
 </Project>

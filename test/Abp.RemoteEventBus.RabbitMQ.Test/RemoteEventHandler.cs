@@ -1,21 +1,19 @@
 ﻿using Abp.Dependency;
+using Abp.RemoteEventBus.Handlers;
 using Castle.Core.Logging;
 
 namespace Abp.RemoteEventBus.RabbitMQ.Test
 {
-    [RemoteEventHandler(ForType = "Type_Test", ForTopic = "Topic_Test")]
-    public class RemoteEventHandler : IRemoteEventHandler, ITransientDependency
+    public class RemoteEventHandler : IRemoteEventHandler<TestRemoteEventData>, IRemoteEventHandler<Test1RemoteEventData>, ITransientDependency
     {
-        public ILogger Logger { get; set; }
-
-        public RemoteEventHandler()
+        public void HandleEvent(TestRemoteEventData eventData)
         {
-            Logger = NullLogger.Instance;
+
         }
 
-        public void HandleEvent(RemoteEventArgs eventArgs)
+        public void HandleEvent(Test1RemoteEventData eventData)
         {
-            Logger.Info("receive " + eventArgs.EventData.Data["playload"]);
+
         }
     }
 }

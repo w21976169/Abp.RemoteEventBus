@@ -33,15 +33,19 @@ namespace Abp.RemoteEventBus.RabbitMQ
         public IRemoteEventBusConfiguration AutoSubscribe()
         {
             var topics = new List<string>();
-            _typeFinder.Find(type => Attribute.IsDefined(type, typeof(RemoteEventHandlerAttribute), false) && typeof(IRemoteEventHandler).IsAssignableFrom(type))
-            .ToList().ForEach(type =>
+            var types = _typeFinder.Find(type =>
+                    type.GetInterfaces().Any(e => e.Name.Contains("IRemoteEventHandler")))
+                .ToList();
+
+            foreach (var type in types)
             {
-                var attribute = Attribute.GetCustomAttribute(type, typeof(RemoteEventHandlerAttribute)) as RemoteEventHandlerAttribute;
-                if (!string.IsNullOrWhiteSpace(attribute.ForTopic) && !topics.Contains(attribute.ForTopic))
+                var iType = type.GetInterfaces().FirstOrDefault(e => e.Name.Contains("IRemoteEventHandler"));
+                if (iType != null)
                 {
-                    topics.Add(attribute.ForTopic);
+                    var gType = iType.GetGenericArguments().FirstOrDefault();
+                    if (gType != null) topics.Add(gType.Name);
                 }
-            });
+            }
 
             Logger.Info($"auto subscribe topics {string.Join(",", topics)}");
 

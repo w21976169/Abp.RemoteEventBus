@@ -14,15 +14,14 @@ namespace Abp.RemoteEventBus.RabbitMQ
         private readonly ConcurrentDictionary<string, IModel> _dictionary;
         private readonly List<IConnection> _connectionsAcquired;
         private readonly PooledObjectFactory _factory;
-
-        private string _exchangeTopic = "RemoteEventBus.Exchange.Topic";
-        private string _queuePrefix = "RemoteEventBus.Queue.";
+        private readonly IRabbitMqEventBusOptions _rabbitMqEventBusOptions;
 
         private bool _disposed;
 
-        public RabbitMQRemoteEventSubscriber(IRabbitMQSetting rabbitMQSetting)
+        public RabbitMQRemoteEventSubscriber(IRabbitMqEventBusOptions rabbitMqEventBusOptions)
         {
-            _factory = new PooledObjectFactory(rabbitMQSetting);
+            _rabbitMqEventBusOptions = rabbitMqEventBusOptions;
+            _factory = new PooledObjectFactory(rabbitMqEventBusOptions);
             _dictionary = new ConcurrentDictionary<string, IModel>();
             _connectionsAcquired = new List<IConnection>();
         }
@@ -42,17 +41,16 @@ namespace Abp.RemoteEventBus.RabbitMQ
                 try
                 {
                     var channel = connection.CreateModel();
-                    var queue = _queuePrefix + topic;
-                    channel.ExchangeDeclare(_exchangeTopic, "topic",true);
-                    channel.QueueDeclare(queue, true, false, false, null);
-                    channel.QueueBind(queue, _exchangeTopic, topic);
+                    channel.ExchangeDeclare(_rabbitMqEventBusOptions.ExchangeName, "direct", true);
+                    channel.QueueDeclare(_rabbitMqEventBusOptions.ClientName, true, false, false, null);
+                    channel.QueueBind(_rabbitMqEventBusOptions.ClientName, _rabbitMqEventBusOptions.ExchangeName, topic);
                     var consumer = new EventingBasicConsumer(channel);
                     consumer.Received += (ch, ea) =>
                     {
                         handler(ea.RoutingKey, Encoding.UTF8.GetString(ea.Body));
                         channel.BasicAck(ea.DeliveryTag, false);
                     };
-                    channel.BasicConsume(queue, false, consumer);
+                    channel.BasicConsume(_rabbitMqEventBusOptions.ClientName, false, consumer);
                     _dictionary[topic] = channel;
                 }
                 finally

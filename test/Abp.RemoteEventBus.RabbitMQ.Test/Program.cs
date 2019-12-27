@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Abp.Castle.Logging.Log4Net;
+using Abp.RemoteEventBus.Impl;
 using Castle.Facilities.Logging;
 
 namespace Abp.RemoteEventBus.RabbitMQ.Test
@@ -11,8 +12,8 @@ namespace Abp.RemoteEventBus.RabbitMQ.Test
         {
             var bootstrapper = AbpBootstrapper.Create<RabbitMQTestModule>();
 
-            bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f =>
-                f.UseAbpLog4Net().WithConfig("log4net.config"));
+            //bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f =>
+            //    f.UseAbpLog4Net().WithConfig("log4net.config"));
 
             bootstrapper.Initialize();
             
@@ -21,16 +22,14 @@ namespace Abp.RemoteEventBus.RabbitMQ.Test
             Task.Factory.StartNew(() =>
             {
                 while (true)
-                {       
-                    const string type = "Type_Test";
-                    const string topic = "Topic_Test";
-                    var eventDate = new RemoteEventData(type)
+                {
+                    var eventDate = new Test1RemoteEventData()
                     {
-                        Data = {["playload"] = DateTime.Now}
+                        Name = "Wynnyo"
                     };
-                    remoteEventBus.Publish(topic, eventDate);
+                    remoteEventBus.Publish(eventDate);
 
-                    Task.Delay(1000).Wait();
+                    Task.Delay(30000).Wait();
                 }
             });
 

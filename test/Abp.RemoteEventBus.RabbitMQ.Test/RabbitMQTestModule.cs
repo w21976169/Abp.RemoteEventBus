@@ -15,7 +15,9 @@ namespace Abp.RemoteEventBus.RabbitMQ.Test
         {
             Configuration.Modules.RemoteEventBus().UseRabbitMQ().Configure(setting =>
             {
-                setting.Url = "amqp://guest:guest@127.0.0.1:5672/";
+                setting.Url = "amqp://guest:guest@114.116.213.181:5672/";
+                setting.ExchangeName = "RemoteEventBusMessages";
+                setting.ClientName = "ZTTest";
             });
 
             Configuration.Modules.RemoteEventBus().AutoSubscribe();
