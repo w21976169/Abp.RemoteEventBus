@@ -31,7 +31,7 @@ namespace Camc.Abp.RemoteEventBus.RabbitMQ
 
         public void Publish(IRemoteEventData remoteEventData)
         {
-            var routingKey = remoteEventData.GetType().Name;
+            var routingKey = remoteEventData.GetType().FullName;
 
             var connection = _connectionPool.Acquire();
             try

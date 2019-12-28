@@ -44,7 +44,7 @@ namespace Camc.Abp.RemoteEventBus.Configuration
                     if (iType != null)
                     {
                         var gType = iType.GetGenericArguments().FirstOrDefault();
-                        if (gType != null) topics.Add(gType.Name);
+                        if (gType != null) topics.Add(gType.FullName);
                     }
 
                 }

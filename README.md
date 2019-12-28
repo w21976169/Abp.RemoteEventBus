@@ -1,13 +1,17 @@
 # Abp.RemoteEventBus
-## What’s this?
+## 起因
 
-受到[Abp](https://github.com/FJQBT/ABP)事件总线的灵感而开发的一个分布式的事件总线，可以跨应用触发事件。基于发布/订阅模式，消息的传递可以通过redis，rabbitmq，kafka等实现。你还能非常容易的实现你自己的方式，通过实现指定接口。支持控制台和web应用。
+由于公司在使用 abp 做中台服务(还没有使用 abp vnext )，需要 远程消息;
 
-A distributed event bus, inspired by the [Abp](https://github.com/FJQBT/ABP) event bus, can trigger events across applications. Based on publish / subscribe mode, the message can be passed through redis, rabbitmq, kafka and so on. You can also very easily implement your own way by implementing the specified interface. Support in console and web applications.
+本项目是在 参考了 [wuyi6216/Abp.RemoteEventBus](https://github.com/wuyi6216/Abp.RemoteEventBus) 和 [Volo.Abp.EventBus.RabbitMQ](https://github.com/abpframework/abp/tree/dev/framework/src/Volo.Abp.EventBus.RabbitMQ) 改进的;
 
-## How to use?
+## 特别感谢
 
-### 
+
+
+@[Wuyi6216](https://github.com/wuyi6216)
+
+## 使用
 
 ### RemoteEventData
 
@@ -41,34 +45,8 @@ public class TestRemoteEventHandler : IRemoteEventHandler<TestRemoteEventData>,
 }
 ```
 
-### 
-
-
-
-### Publish
-
-```c#
-    var eventDate = new RemoteEventData("Type_Test")
-        {
-            Data ={["playload"]=DateTime.Now}
-        };
-    remoteEventBus.Publish("Topic_Test", eventDate);
-
-```
-
-### Subscribe
-
-```C#
-    [RemoteEventHandler(ForType = "Type_Test", ForTopic = "Topic_Test")]
-    public class RemoteEventHandler : IRemoteEventHandler, ITransientDependency
-    {
-        public void HandleEvent(RemoteEventArgs eventArgs)
-        {
-            Logger.Info("receive " + eventArgs.EventData.Data["playload"]);
-        }
-    }
-```
 ### Configuration
+
 ```c#
 [DependsOn(typeof(CamcAbpRemoteEventBusRabbitMQModule))]
 public class RabbitMQTestModule : AbpModule
@@ -91,9 +69,33 @@ public class RabbitMQTestModule : AbpModule
 }
 ```
 
+### Publish
+
+```c#
+// TODO:  依赖注入 _remoteEventBus(构造方法注入, 属性注入,IocManager解析)
+
+_remoteEventBus.Publish(new TestRemoteEventData(){ Name = "TestMessage" });
+_remoteEventBus.Publish(new Test1RemoteEventData(){ Name = "Test1Message" });
+
+```
+
+### Subscribe
+
+```C#
+ public class TestRemoteEventHandler : IRemoteEventHandler<TestRemoteEventData>,
+        IRemoteEventHandler<Test1RemoteEventData>, ITransientDependency
+{
+    public void HandleEvent(TestRemoteEventData eventData)
+    {
+    	// TODO： 处理类型为 TestRemoteEventData 消息
+    }
+
+    public void HandleEvent(Test1RemoteEventData eventData)
+    {
+    	// TODO： 处理类型为  Test1RemoteEventData 消息
+	}
+}
+```
 
 ### Demo
-See [Abp.RemoteEventBus.RabbitMQ.Test](test/Abp.RemoteEventBus.RabbitMQ.Test)
-
-## How it work?
-[Here](doc/How%20it%20work.md)
+See [Camc.Abp.RemoteEventBus.RabbitMQ.Test](test/Abp.RemoteEventBus.RabbitMQ.Test)
