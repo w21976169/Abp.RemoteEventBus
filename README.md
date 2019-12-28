@@ -1,4 +1,4 @@
-# Abp.RemoteEventBus
+# Camc.Abp.RemoteEventBus
 ## 起因
 
 由于公司在使用 abp 做中台服务(还没有使用 abp vnext )，需要 远程消息;
