@@ -45,22 +45,6 @@ public class Test1RemoteEventData: RemoteEventData
 }
 ```
 
-### RemoteEventHandler
-
-```c#
-public class TestRemoteEventHandler : IRemoteEventHandler<TestRemoteEventData>,
-	IRemoteEventHandler<Test1RemoteEventData>, ITransientDependency
-{
-	public void HandleEvent(TestRemoteEventData eventData)
-    {
-    }
-
-    public void HandleEvent(Test1RemoteEventData eventData)
-    {
-    }
-}
-```
-
 ### Configuration
 
 ```c#
