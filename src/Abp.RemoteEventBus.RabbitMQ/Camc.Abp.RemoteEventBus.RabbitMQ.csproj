@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>wuyi</Authors>
-    <Company />
+    <Authors>wynnyo</Authors>
+    <Company>wynnyo</Company>
     <Product />
-    <PackageProjectUrl>https://github.com/wuyi6216/Abp.RemoteEventBus</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/w21976169/Camc.Abp.RemoteEventBus</PackageProjectUrl>
     <Description>Use RabbitMQ for Abp.RemoteEventBus</Description>
-    <Version>1.0.1</Version>
+    <Version>4.4.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Commons" Version="0.4.0.1347" />

@@ -11,6 +11,22 @@
 
 @[Wuyi6216](https://github.com/wuyi6216)
 
+## 安装
+
+注：我这里暂时只发布了 4.4.0 版本，对应 abp 4.4.0，需要其他版本可以直接在源码修改，或者联系我
+
+	- qq：21976169
+	- wechat：wqj21976169
+	- tel：17695712131
+
+```
+Install-Package Camc.Abp.RemoteEventBus -Version 4.4.0
+```
+
+```
+Install-Package Camc.Abp.RemoteEventBus.RabbitMQ -Version 4.4.0
+```
+
 ## 使用
 
 ### RemoteEventData
