@@ -1,6 +1,6 @@
 ﻿using Abp.Dependency;
 
-namespace Camc.Abp.RemoteEventBus.RabbitMQ
+namespace Abp.RemoteEventBus.RabbitMQ
 {
     public class RabbitMqEventBusOptions : IRabbitMqEventBusOptions, ITransientDependency
     {

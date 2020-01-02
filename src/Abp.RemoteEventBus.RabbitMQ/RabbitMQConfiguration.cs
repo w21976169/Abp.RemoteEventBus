@@ -1,10 +1,10 @@
 ﻿using System;
 using Abp.Configuration.Startup;
 using Abp.Dependency;
-using Camc.Abp.RemoteEventBus.Managers;
+using Abp.RemoteEventBus.Managers;
 using Castle.MicroKernel.Registration;
 
-namespace Camc.Abp.RemoteEventBus.RabbitMQ
+namespace Abp.RemoteEventBus.RabbitMQ
 {
     public class RabbitMQConfiguration : IRabbitMQConfiguration, ISingletonDependency
     {

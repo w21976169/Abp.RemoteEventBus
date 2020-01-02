@@ -1,9 +1,8 @@
 ﻿using System;
-using Abp;
 using Commons.Pool;
 using RabbitMQ.Client;
 
-namespace Camc.Abp.RemoteEventBus.RabbitMQ
+namespace Abp.RemoteEventBus.RabbitMQ
 {
     public class PooledObjectFactory : IPooledObjectFactory<IConnection>
     {

@@ -6,7 +6,8 @@
     <Product />
     <PackageProjectUrl>https://github.com/w21976169/Camc.Abp.RemoteEventBus</PackageProjectUrl>
     <Description>Use RabbitMQ for Abp.RemoteEventBus</Description>
-    <Version>4.4.0</Version>
+    <Version>4.4.2</Version>
+    <PackageId>Camc.Abp.RemoteEventBus.RabbitMQ</PackageId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Commons" Version="0.4.0.1347" />
@@ -14,6 +15,6 @@
     <PackageReference Include="RabbitMQ.Client" Version="5.1.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Abp.RemoteEventBus\Camc.Abp.RemoteEventBus.csproj" />
+    <ProjectReference Include="..\Abp.RemoteEventBus\Abp.RemoteEventBus.csproj" />
   </ItemGroup>
 </Project>

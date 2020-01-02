@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Abp;
-using Camc.Abp.RemoteEventBus.Managers;
+using Abp.RemoteEventBus.Managers;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace Camc.Abp.RemoteEventBus.RabbitMQ
+namespace Abp.RemoteEventBus.RabbitMQ
 {
     public class RabbitMQRemoteEventSubscriber : IRemoteEventSubscriber
     {

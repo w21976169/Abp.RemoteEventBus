@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 using Abp.Dependency;
 using Abp.Events.Bus;
 using Abp.Reflection;
-using Camc.Abp.RemoteEventBus.EventDatas;
+using Abp.RemoteEventBus.EventDatas;
 using Castle.Core.Logging;
 using Newtonsoft.Json;
 
-namespace Camc.Abp.RemoteEventBus.Managers
+namespace Abp.RemoteEventBus.Managers
 {
     public class RemoteEventBus : IRemoteEventBus
     {

@@ -1,7 +1,7 @@
 ﻿using Abp.Dependency;
-using Camc.Abp.RemoteEventBus.Handlers;
+using Abp.RemoteEventBus.Handlers;
 
-namespace Camc.Abp.RemoteEventBus.RabbitMQ.Test
+namespace Abp.RemoteEventBus.RabbitMQ.Test
 {
     public class TestRemoteEventHandler : IRemoteEventHandler<TestRemoteEventData>,
         IRemoteEventHandler<Test1RemoteEventData>, ITransientDependency

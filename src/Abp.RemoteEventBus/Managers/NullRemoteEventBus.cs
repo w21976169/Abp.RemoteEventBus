@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Camc.Abp.RemoteEventBus.EventDatas;
+using Abp.RemoteEventBus.EventDatas;
 
-namespace Camc.Abp.RemoteEventBus.Managers
+namespace Abp.RemoteEventBus.Managers
 {
     public class NullRemoteEventBus : IRemoteEventBus
     {

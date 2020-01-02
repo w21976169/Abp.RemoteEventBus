@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Camc.Abp.RemoteEventBus.RabbitMQ
+namespace Abp.RemoteEventBus.RabbitMQ
 {
     public interface IRabbitMQConfiguration
     {

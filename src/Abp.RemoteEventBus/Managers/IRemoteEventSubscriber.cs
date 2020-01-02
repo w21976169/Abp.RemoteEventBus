@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Camc.Abp.RemoteEventBus.Managers
+namespace Abp.RemoteEventBus.Managers
 {
     public interface IRemoteEventSubscriber : IDisposable
     {

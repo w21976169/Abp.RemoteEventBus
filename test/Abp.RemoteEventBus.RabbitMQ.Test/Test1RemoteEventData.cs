@@ -1,7 +1,7 @@
 ﻿using System;
-using Camc.Abp.RemoteEventBus.EventDatas;
+using Abp.RemoteEventBus.EventDatas;
 
-namespace Camc.Abp.RemoteEventBus.RabbitMQ.Test
+namespace Abp.RemoteEventBus.RabbitMQ.Test
 {
     [Serializable]
     public class Test1RemoteEventData: RemoteEventData

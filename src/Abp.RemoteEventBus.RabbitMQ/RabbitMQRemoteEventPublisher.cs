@@ -1,12 +1,12 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
-using Camc.Abp.RemoteEventBus.EventDatas;
-using Camc.Abp.RemoteEventBus.Managers;
+using Abp.RemoteEventBus.EventDatas;
+using Abp.RemoteEventBus.Managers;
 using Commons.Pool;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 
-namespace Camc.Abp.RemoteEventBus.RabbitMQ
+namespace Abp.RemoteEventBus.RabbitMQ
 {
     public class RabbitMQRemoteEventPublisher : IRemoteEventPublisher
     {

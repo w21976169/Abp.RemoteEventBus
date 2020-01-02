@@ -1,15 +1,15 @@
 ﻿using Abp.Dependency;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
-using Camc.Abp.RemoteEventBus.Managers;
+using Abp.RemoteEventBus.Managers;
 
-namespace Camc.Abp.RemoteEventBus
+namespace Abp.RemoteEventBus
 {
-    public class CamcAbpRemoteEventBusModule : AbpModule
+    public class AbpRemoteEventBusModule : AbpModule
     {
         public override void Initialize()
         {
-            IocManager.RegisterAssemblyByConvention(typeof(CamcAbpRemoteEventBusModule).GetAssembly());
+            IocManager.RegisterAssemblyByConvention(typeof(AbpRemoteEventBusModule).GetAssembly());
         }
 
         public override void PostInitialize()

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Abp;
-using Camc.Abp.RemoteEventBus.Managers;
+using Abp.RemoteEventBus.Managers;
 
-namespace Camc.Abp.RemoteEventBus.RabbitMQ.Test
+namespace Abp.RemoteEventBus.RabbitMQ.Test
 {
     class Program
     {

@@ -1,6 +1,6 @@
 ﻿using Abp.Configuration.Startup;
 
-namespace Camc.Abp.RemoteEventBus.Configuration
+namespace Abp.RemoteEventBus.Configuration
 {
     public static class ConfigurationExtensions
     {

@@ -3,10 +3,10 @@ using System.Linq;
 using Abp.Configuration.Startup;
 using Abp.Dependency;
 using Abp.Reflection;
-using Camc.Abp.RemoteEventBus.Managers;
+using Abp.RemoteEventBus.Managers;
 using Castle.Core.Logging;
 
-namespace Camc.Abp.RemoteEventBus.Configuration
+namespace Abp.RemoteEventBus.Configuration
 {
     public class RemoteEventBusConfiguration : IRemoteEventBusConfiguration, ISingletonDependency
     {
