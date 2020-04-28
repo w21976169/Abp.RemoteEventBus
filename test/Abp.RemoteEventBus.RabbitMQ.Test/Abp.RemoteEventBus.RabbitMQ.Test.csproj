@@ -7,6 +7,7 @@
     <PackageReference Include="Abp" Version="4.4.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Abp.RemoteEventBus.Messages\Camc.Abp.RemoteEventBus.Messages.csproj" />
     <ProjectReference Include="..\..\src\Abp.RemoteEventBus.RabbitMQ\Abp.RemoteEventBus.RabbitMQ.csproj" />
   </ItemGroup>
 </Project>

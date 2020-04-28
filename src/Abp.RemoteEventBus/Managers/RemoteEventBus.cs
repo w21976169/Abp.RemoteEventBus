@@ -95,13 +95,17 @@ namespace Abp.RemoteEventBus.Managers
         public virtual void MessageHandle(string topic, string message)
         {
             // TODO: 触发对应的 Handler
-            var dataType = _typeFinder.Find(type => type.FullName == topic).FirstOrDefault();
-
-            var eventData = JsonConvert.DeserializeObject(message, dataType);
 
             var handleType = _typeFinder.Find(type => type.GetInterfaces().Any(e =>
                     e.Name.Contains("IRemoteEventHandler") && e.GetGenericArguments().Any(e1 => e1.FullName == topic)))
                 .FirstOrDefault();
+
+            var dataType = handleType.GetInterfaces().First(e =>
+                         e.Name.Contains("IRemoteEventHandler")
+                         && e.GetGenericArguments().Any(e1 => e1.FullName == topic))
+                     .GetGenericArguments().First(e1 => e1.FullName == topic);
+
+            var eventData = JsonConvert.DeserializeObject(message, dataType);
 
             var handler = _iocResolver.Resolve(handleType);
 

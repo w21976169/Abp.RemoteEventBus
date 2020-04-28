@@ -1,5 +1,6 @@
 ﻿using Abp.Dependency;
 using Abp.RemoteEventBus.Handlers;
+using Abp.RemoteEventBus.Messages;
 
 namespace Abp.RemoteEventBus.RabbitMQ.Test
 {

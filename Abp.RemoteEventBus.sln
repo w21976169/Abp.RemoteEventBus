@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abp.RemoteEventBus.RabbitMQ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abp.RemoteEventBus.RabbitMQ.Test", "test\Abp.RemoteEventBus.RabbitMQ.Test\Abp.RemoteEventBus.RabbitMQ.Test.csproj", "{62B7829F-F3B4-43EF-9013-2D7B2DB1EF87}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Camc.Abp.RemoteEventBus.Messages", "src\Abp.RemoteEventBus.Messages\Camc.Abp.RemoteEventBus.Messages.csproj", "{8AEA9742-C654-4B4E-9A0B-5ABDBE450F23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{62B7829F-F3B4-43EF-9013-2D7B2DB1EF87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62B7829F-F3B4-43EF-9013-2D7B2DB1EF87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62B7829F-F3B4-43EF-9013-2D7B2DB1EF87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AEA9742-C654-4B4E-9A0B-5ABDBE450F23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AEA9742-C654-4B4E-9A0B-5ABDBE450F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AEA9742-C654-4B4E-9A0B-5ABDBE450F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AEA9742-C654-4B4E-9A0B-5ABDBE450F23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

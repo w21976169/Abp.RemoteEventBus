@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Abp.RemoteEventBus.Managers;
+using Abp.RemoteEventBus.Messages;
 
 namespace Abp.RemoteEventBus.RabbitMQ.Test
 {
